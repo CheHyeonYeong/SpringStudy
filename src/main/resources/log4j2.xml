@@ -10,7 +10,7 @@
         <logger name ="org.springframework" level="INFO" additivity="false">
             <appender-ref ref="console" />
         </logger>
-        <logger name ="org.zerok" level="INFO" additivity="false">
+        <logger name ="com.zerok" level="INFO" additivity="false">
             <appender-ref ref="console" />
         </logger>
         <root level="INFO" additivity="false">
