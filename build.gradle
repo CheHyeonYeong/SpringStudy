@@ -42,6 +42,11 @@ dependencies {
 
 // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
   implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.23.1'
+  implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.23.1'
+  implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.23.1'
+
+  //jstl 라이브러리 추가
+  implementation group: 'jstl', name:'jstl', version:'1.2'
 
 }
 
