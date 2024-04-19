@@ -1,7 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean class="com.zercok.demotest2.sample.SampleDAO"></bean>
-    <bean class="com.zercok.demotest2.sample.SampleService"></bean>
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!--    <bean class="com.testjsp.demotest.sample.SampleDAO"></bean>-->
+    <!--    <bean class="com.testjsp.demotest.sample.SampleService"></bean>-->
+
+    <!-- 컴포넌트 스캔 : 특정 위치에 있는 bean들을 자동으로 등록합니다.
+            이때 객체에 어노테이션을 사용하게 됩니다.
+            사용하는 어노테이션 : @Controller
+                             @Service
+                             @Repository
+                             @Component -->
+
+    <context:component-scan base-package="com.zercok.demotest2.sample"/>
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/webdb?serverTimezone=Asia/Seoul"></property>
+        <property name="username" value="spring"></property>
+        <property name="password" value="spring"></property>
+        <property name="dataSourceProperties">
+            <props>
+                <prop key="cachePrepStmts">true</prop>
+                <prop key="prepStmtCacheSize">250</prop>
+                <prop key="prepStmtCacheSqlLimit">2048</prop>
+            </props>
+        </property>
+
+    </bean>
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <constructor-arg ref="hikariConfig" />
+    </bean>
 </beans>

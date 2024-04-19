@@ -1,4 +1,8 @@
 package com.zercok.demotest2.sample;
 
-public class SampleDAO {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface SampleDAO {
+
 }
