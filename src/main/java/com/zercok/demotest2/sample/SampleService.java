@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
     @RequiredArgsConstructor
     public class SampleService {
 //      @Autowired 1
-        @Qualifier("normal")
+//        @Qualifier("normal")
         private final SampleDAO sampleDAO;
         //2 final로 지정하고 @RequiredArgsConstructor생성자 주입이 일어남
 

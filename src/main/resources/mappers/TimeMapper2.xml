@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatics.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--mapper의 namespace는 설정을 적용할 인터페이스를 지정함-->
+<mapper namespace="com.zercok.demotest2.mapper.TimeMapper2">
+    <select id="getNow" resultType="string"> <!-- string은 별칭 처리가 된 상태이다!  -->
+        select now();
+    </select>
+
+</mapper>

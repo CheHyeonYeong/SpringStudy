@@ -2,6 +2,7 @@ package com.demotest2.sample;
 
 import com.zercok.demotest2.sample.SampleService;
 import lombok.extern.log4j.Log4j2;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,11 +30,23 @@ public class SampleTests {
         Assertions.assertNotNull(sampleService);
     }
 
+
     @Test
     public void testConnection() throws Exception {
         Connection connection = dataSource.getConnection();
         log.info(connection);
-        Assertions.assertNotNull(connection);
+        Assertions.assertNotNull(connection); //null이면 fail로 들어간다.
         connection.close();
+    }
+
+    @Autowired
+    private SqlSessionFactory sqlSessionFactory;
+
+    @Test
+    public void testSqlSessionFactory() throws Exception {
+
+        log.info(sqlSessionFactory);
+        Assertions.assertNotNull(sqlSessionFactory);
+
     }
 }
