@@ -22,6 +22,7 @@
                              @Component -->
 
     <context:component-scan base-package="com.zercok.demotest2.sample"/>
+
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
         <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/webdb?serverTimezone=Asia/Seoul"></property>
