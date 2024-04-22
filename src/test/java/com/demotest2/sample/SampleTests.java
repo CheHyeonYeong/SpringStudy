@@ -44,9 +44,7 @@ public class SampleTests {
 
     @Test
     public void testSqlSessionFactory() throws Exception {
-
         log.info(sqlSessionFactory);
         Assertions.assertNotNull(sqlSessionFactory);
-
     }
 }
