@@ -16,6 +16,9 @@
             <appender-ref ref ="console" />
         </logger>
 
+        <logger name="com.zercok.demotest2.mapper" level="TRACE" additivity="false">
+            <appender-ref ref="console"/>
+        </logger>
         <root level = "INFO" additivity ="false">
             <appender-ref ref ="console" />
         </root>
