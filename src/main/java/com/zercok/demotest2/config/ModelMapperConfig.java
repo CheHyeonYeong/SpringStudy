@@ -4,8 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Configurable //spring bean에 대한 설정하는 클래스를 명시한다.
+@Configuration //spring bean에 대한 설정하는 클래스를 명시한다.
 public class ModelMapperConfig {
 
     @Bean //java code로 세팅 설정 -> root context.xml에서 작업해도 된다.
