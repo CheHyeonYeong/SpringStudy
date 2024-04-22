@@ -2,6 +2,8 @@ package com.zercok.demotest2.controller;
 
 import com.sun.tools.javac.comp.Todo;
 import com.zercok.demotest2.dto.TodoDTO;
+import com.zercok.demotest2.service.TodoService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,7 @@ import javax.validation.Valid;
 @Controller
 @Log4j2
 @RequestMapping("/todo")
+@RequiredArgsConstructor
 public class TodoController {
     @RequestMapping("/list")
     public void list() { // todo/list로 접근 시 동작
@@ -26,6 +29,7 @@ public class TodoController {
         log.info("get register");
     }
 
+    private final TodoService todoService;
     //4.객체 자료 수집
     @PostMapping(value = "/register")
     public String registerPost(@Valid TodoDTO todoDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -36,6 +40,8 @@ public class TodoController {
             return "redirect:/todo/register";
         }
         log.info("todoDTO: " + todoDTO);
+
+        todoService.register(todoDTO);
         return "redirect:/todo/list";
     }
 
