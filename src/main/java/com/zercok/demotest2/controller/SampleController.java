@@ -4,21 +4,15 @@ import com.zercok.demotest2.dto.TodoDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 
 @Controller
 @Log4j2
+@RequestMapping("/sample")
 public class SampleController {
-    @GetMapping("/hello")
-    public void hello() {
-        log.info("hello");
-    }
 
     //RequestMapping에서 파생된 어노테이션 : GetMapping, PostMapping
     //1. 기본 자료형 데이터 자동 수집
@@ -89,7 +83,7 @@ public class SampleController {
     public  String ex5(RedirectAttributes redirectAttributes) {
         redirectAttributes.addAttribute("name", "abc");
         redirectAttributes.addFlashAttribute("result", "success");
-        return "redirect:/ex6";
+        return "redirect:/sample/ex6";
     }
 
     @GetMapping("/ex6")
