@@ -13,4 +13,13 @@
         insert into tbl_todo(title, duedate, writer) values (#{title}, #{dueDate}, #{writer});
     </insert>
 
+    <select id="selectAll" resultType="com.zercok.demotest2.domain.TodoVO">
+        select * from tbl_todo order by tno desc;
+    </select>
+    <select id="selectOne" resultType="com.zercok.demotest2.domain.TodoVO">
+        select * from tbl_todo where tno = #{tno};
+    </select>
+
+
+
 </mapper>

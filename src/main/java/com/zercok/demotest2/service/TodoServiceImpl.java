@@ -9,6 +9,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Log4j2
 @RequiredArgsConstructor    //생성자 주입하려고 했음!
@@ -23,6 +26,23 @@ public class TodoServiceImpl implements TodoService {
         TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class);
         log.info(todoVO);
         todoMapper.insert(todoVO);
+    }
+
+    @Override
+    public List<TodoDTO> getAll() {
+        List<TodoDTO> dtoList = todoMapper.selectAll().stream()
+                .map(vo -> modelMapper.map(vo, TodoDTO.class))
+                .collect(Collectors.toList()); //stream을 collect 타입으로 바꿔짐 -> 지금은 타입이 list로 되어 있어서 list로 변경!
+
+        return dtoList;
+    }
+
+    @Override
+    public TodoDTO getOne(Long tno) {
+        TodoVO vo = todoMapper.selectOne(tno);
+        TodoDTO dto = modelMapper.map(vo, TodoDTO.class);
+
+        return dto;
     }
 
 }
