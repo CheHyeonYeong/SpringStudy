@@ -53,6 +53,7 @@
                         Featured
                     </div>
                     <div class="card-body">
+                        <form action="/todo/modify" method="post">
                         <div class="input-group mb-3">
                             <div class="row">
                             <span class="input-group-text">TNO</span>
@@ -63,7 +64,7 @@
                             <div class="row">
                             <span class="input-group-text">TITLE</span>
                             <input type="text" name="title" class="form-control"
-                                   value='<c:out value="${dto.title}"/>' readonly>
+                                   value='<c:out value="${dto.title}"/>'>
                             </div>
 
                             <div class="row">
@@ -75,17 +76,19 @@
                             <div class="row">
                             <span class="input-group-text">DUEDATE</span>
                             <input type="date" name="dueDate" class="form-control"
-                                   value=<c:out value="${dto.dueDate}"/> readonly>
+                                   value=<c:out value="${dto.dueDate}"/> >
                             </div>
                             <div class="row">
                             <label class="from-check-label">FINISHED &nbsp;</label>
                             <input type="checkbox" name="finished" class="form-check-input"
-                                   ${dto.finished ? "checked" : ""} disabled>
+                                   ${dto.finished ? "checked" : ""} >
                             </div>
                         </div>
+                        </form>
                         <div class="my-4">
                             <div class="float-end">
-                                <button type="button" class="btn btn-primary">Modify</button>
+                                <button type="button" class="btn btn-danger">Remove</button>
+                                <button type="submit" class="btn btn-primary">Modify</button>
                                 <button type="button" class="btn btn-secondary">Go to List</button>
                             </div>
                         </div>
@@ -111,14 +114,36 @@
 
 <script>
     document.querySelector(".btn-primary").addEventListener("click", function (e){
-        self.location = "/todo/modify?tno="+${dto.tno};
-    },false)
+        e.preventDefault(); //더 이상 진행하지 않음
+        e.stopPropagation() //
+        formObj.action = "/todo/modify";
+        formObj.method = "post";
+        formObj.submit();
+    },false);
     //option이 없다
 
     document.querySelector(".btn-secondary").addEventListener("click", function (e){
+        e.preventDefault(); //더 이상 진행하지 않음
+        e.stopPropagation() //
+
         self.location = "/todo/list";
-    },false)
+    },false);
+    const formObj = document.querySelector("form")
+    document.querySelector(".btn-danger").addEventListener("click", function (e) {
+        e.preventDefault(); //더 이상 진행하지 않음
+        e.stopPropagation() //
+        formObj.action = "/todo/remove";
+        formObj.method = "post";
+        formObj.submit();
+    },false);
 </script>
+<script>
+    const serverValidResult = {}
+    <c:forEach items="${errors}" var="error">
+    serverValidResult['$[error..getFieldId()']='${error.defaultMessage}'
+    </c:forEach>
+    console.log(serverValidResult)
+</script>x
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

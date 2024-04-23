@@ -27,6 +27,7 @@
         <property name="formatters">
             <set>
                 <bean class="com.zercok.demotest2.controller.formatter.LocalDateFormatter"/>
+                <bean class="com.zercok.demotest2.controller.formatter.CheckboxFormatter"/>
             </set>
         </property>
     </bean>

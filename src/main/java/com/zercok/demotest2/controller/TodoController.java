@@ -1,6 +1,7 @@
 package com.zercok.demotest2.controller;
 
 import com.sun.tools.javac.comp.Todo;
+import com.zercok.demotest2.dto.PageRequestDTO;
 import com.zercok.demotest2.dto.TodoDTO;
 import com.zercok.demotest2.service.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -45,14 +46,34 @@ public class TodoController {
     @RequestMapping("/list")
     public void list(Model model) {
         log.info("todo list");
-        model.addAttribute("dtoList", todoService.getAll()); //forward 되면서 jsp로 전달된다
+        model.addAttribute("dtoList", todoService.getList(new PageRequestDTO())); //forward 되면서 jsp로 전달된다
     }
     //한개의 투두 조회하기
-    @GetMapping("/read")
+    @GetMapping({"/read", "/modify"}) //경로 두 개를 묶음
     public void read(Long tno, Model model) { //파라미터 값으로 tno를 받음, list에서 title에 작업을 해서 넣어줘야한다!
         TodoDTO todoDTO = todoService.getOne(tno);
         log.info(todoDTO);
         model.addAttribute("dto", todoDTO);
     }
+
+    @PostMapping("/remove")
+    public String remove(Long tno, RedirectAttributes redirectAttributes) {
+        log.info("remove todo: " + tno);
+        todoService.delete(tno);
+        return "redirect:/todo/list";
+    }
+    @PostMapping("/modify")
+    public String modify(TodoDTO todoDTO,BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        log.info("modify todo: " + todoDTO);
+        todoService.update(todoDTO);
+        if (bindingResult.hasErrors()){
+            log.info("has errors..........");
+            redirectAttributes.addAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addAttribute("tno", todoDTO.getTno()); //get 파라미터로 넣음.
+            return "redirect:/todo/modify";
+        }
+        return "redirect:/todo/list";
+    }
+
 
 }
