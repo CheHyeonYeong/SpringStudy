@@ -2,6 +2,7 @@ package com.zercok.demotest2.controller;
 
 import com.sun.tools.javac.comp.Todo;
 import com.zercok.demotest2.dto.PageRequestDTO;
+import com.zercok.demotest2.dto.PageResponseDTO;
 import com.zercok.demotest2.dto.TodoDTO;
 import com.zercok.demotest2.service.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -44,9 +45,15 @@ public class TodoController {
         return "redirect:/todo/list";
     }
     @RequestMapping("/list")
-    public void list(Model model) {
-        log.info("todo list");
-        model.addAttribute("dtoList", todoService.getList(new PageRequestDTO())); //forward 되면서 jsp로 전달된다
+    public void list(@Valid PageRequestDTO pageRequestDTO ,BindingResult bindingResult , Model model) {
+        log.info(pageRequestDTO);
+        //valid는 pageRequestDTO를 학인하기 위함
+        if(bindingResult.hasErrors()) {
+            log.info("has errors..........");
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            pageRequestDTO = PageRequestDTO.builder().build();
+        }
+        model.addAttribute("responseDTO", todoService.getList(pageRequestDTO)); //forward 되면서 jsp로 전달된다
     }
     //한개의 투두 조회하기
     @GetMapping({"/read", "/modify"}) //경로 두 개를 묶음
@@ -74,6 +81,4 @@ public class TodoController {
         }
         return "redirect:/todo/list";
     }
-
-
 }
