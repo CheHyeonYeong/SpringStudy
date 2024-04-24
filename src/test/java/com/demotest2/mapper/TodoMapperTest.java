@@ -80,4 +80,21 @@ public class TodoMapperTest {
     public void testCount(){
         log.info(todoMapper.getCount(new PageRequestDTO()));
     }
+
+    @Test
+    public void testSelectSearch() {
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(1)
+                .size(10)
+                .types(new String[]{"t","w"})
+                .finished(true)
+                .from(LocalDate.of(2024,4,20))
+                .to(LocalDate.of(2024,04,30))
+                .keyword("user")
+                .build();
+        List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
+
+        voList.forEach(vo -> log.info(vo));
+    }
+
 }

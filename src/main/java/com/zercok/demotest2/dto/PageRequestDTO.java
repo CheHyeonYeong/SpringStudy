@@ -5,6 +5,8 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
+import java.time.LocalDate;
+import java.util.Arrays;
 
 @Builder
 @Data
@@ -25,6 +27,13 @@ public class PageRequestDTO {
 
     private String link; //페이지와 사이즈 정보를 같이 넘기기 위한 변수
 
+
+    //검색을 위함
+    private String[] types; //검색 종류, 제목, 작성자
+    private String keyword; // 검색값
+    private boolean finished; //완료 여부 - 필터링
+    private LocalDate from; //일시 - 필터링 사용
+    private LocalDate to;
     //맨 끝 페이지로 넣어감
     public int getSkip(){
         return (page-1)*size;
@@ -38,5 +47,11 @@ public class PageRequestDTO {
             link = builder.toString();
         }
         return link;
+    }
+    public boolean checkType(String type){
+        if (types==null || types.length==0 ){
+            return false;
+        }
+        return Arrays.stream(types).anyMatch(type::equals);
     }
 }
