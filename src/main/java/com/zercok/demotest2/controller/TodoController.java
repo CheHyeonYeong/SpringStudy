@@ -64,21 +64,33 @@ public class TodoController {
     }
 
     @PostMapping("/remove")
-    public String remove(Long tno, RedirectAttributes redirectAttributes) {
+    public String remove(Long tno,PageRequestDTO pageRequestDTO, RedirectAttributes redirectAttributes) {
         log.info("remove todo: " + tno);
         todoService.delete(tno);
+        //삭제시에는 페이지 번호를 1로, 사이즈는 전달 받는다.
+        redirectAttributes.addAttribute("page", 1);
+        redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
         return "redirect:/todo/list";
+
     }
     @PostMapping("/modify")
-    public String modify(TodoDTO todoDTO,BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String modify(TodoDTO todoDTO,PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         log.info("modify todo: " + todoDTO);
         todoService.update(todoDTO);
         if (bindingResult.hasErrors()){
             log.info("has errors..........");
             redirectAttributes.addAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addAttribute("tno", todoDTO.getTno()); //get 파라미터로 넣음.
+            //수정 실패시 page와 size 정보가 사라짐
+            redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
+            redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
+            
             return "redirect:/todo/modify";
         }
+        //나는 이래도 modify이후에 다시 넣기가 안돼...
+        redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
+        redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
+
         return "redirect:/todo/list";
     }
 }
