@@ -21,10 +21,10 @@ public class PageResponseDTO<E> {
     private boolean prev;
     //다음페이지 존재 여부
     private boolean next;
-
+    //게시글 목록 정보
     private List<E> dtoList;
 
-    @Builder(builderMethodName = "withAll") //생성자에 Lombok @Builder
+    @Builder(builderMethodName = "withAll") //생성자에 Lombok @Builder -> 생성자 이름은 withAll로 불러서 작업
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<E> dtoList, int total) {
 
         this.page = pageRequestDTO.getPage();

@@ -75,12 +75,25 @@
                                 </tr>
                             </c:forEach>
                             </tbody>
-
-
                         </table>
-                        <p class="card-text">With supporting text below as a natural lead-in
-                            to additinal content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+
+                        <div class="float-end">
+                            <ul class="pagination flex-wrap">
+                                <c:if test="${responseDTO.prev}">
+                                    <li class="page-item"><a class="page-link" href="/todo/list?page=${responseDTO.start-1}">Previous</a> </li>
+<%--                                    <li class="page-item"><a class="page-link" data-num=${responseDTO.start-1}">Previous</a> </li>--%>
+
+                                </c:if>
+                                <c:forEach begin="${responseDTO.start}" end="${responseDTO.end}" var ="num" >
+                                    <li class="page-item"><a class="page-link" href="/todo/list?page=${num}">${num}</a> </li>
+                                </c:forEach>
+                                <c:if test="${responseDTO.next}">
+                                    <li class="page-item"><a class="page-link" href="/todo/list?page=${responseDTO.end+1}">Next</a> </li>
+<%--                                    <li class="page-item"><a class="page-link"  data-num=${responseDTO.end+1}">Next</a> </li>--%>
+<%--                                    해당 방법도 가능하다. data는 num에서 얻어온 값--%>
+                                </c:if>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
