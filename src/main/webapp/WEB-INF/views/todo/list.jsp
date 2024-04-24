@@ -77,20 +77,17 @@
                             </tbody>
                         </table>
 
-                        <div class="float-end">
+                        <div class="float-end justify-content-center">
                             <ul class="pagination flex-wrap">
                                 <c:if test="${responseDTO.prev}">
-                                    <li class="page-item"><a class="page-link" href="/todo/list?page=${responseDTO.start-1}">Previous</a> </li>
-<%--                                    <li class="page-item"><a class="page-link" data-num=${responseDTO.start-1}">Previous</a> </li>--%>
-
+                                    <li class="page-item"><a class="page-link" data-num="${responseDTO.start-1}">Previous</a> </li>
                                 </c:if>
                                 <c:forEach begin="${responseDTO.start}" end="${responseDTO.end}" var ="num" >
-                                    <li class="page-item"><a class="page-link" href="/todo/list?page=${num}">${num}</a> </li>
+                                    <li class="page-item ${responseDTO.page == num ? "active":""}">
+                                        <a class="page-link" data-num="${num}">${num}</a> </li>
                                 </c:forEach>
                                 <c:if test="${responseDTO.next}">
-                                    <li class="page-item"><a class="page-link" href="/todo/list?page=${responseDTO.end+1}">Next</a> </li>
-<%--                                    <li class="page-item"><a class="page-link"  data-num=${responseDTO.end+1}">Next</a> </li>--%>
-<%--                                    해당 방법도 가능하다. data는 num에서 얻어온 값--%>
+                                    <li class="page-item"><a class="page-link" data-num="${responseDTO.end+1}">Next</a> </li>
                                 </c:if>
                             </ul>
                         </div>
@@ -111,7 +108,20 @@
 
 </div>
 
+<script> //script가 가로채서 a 태그가 동작하지 않음
+    document.querySelector(".pagination").addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const target = e.target;
+        // console.log(target); //해상 태그를 누르면 이벤트가 발생한 대상이 눌러짐'
+        // console.log(target.tagName); //e에는 객체 정보만 저장되기 때문에 tagname을 출력할 수 있다.
 
+        if(target.tagName !== 'A') return; //A 태그만 작업한다. -> !==를 권장한다. 값과 타입 전체가 다 맞아야한다. 즉, 확고하게 이것 외에는 다 버리기로 한다.
+        const num = target.getAttribute("data-num");
+        self.location = `/todo/list?page=\${num}`    //백틱(``)을 이용한 템플릿 처리
+
+    }, false); //ul 태그를 확인함
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
