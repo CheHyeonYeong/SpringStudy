@@ -126,7 +126,7 @@
         e.preventDefault(); //더 이상 진행하지 않음
         e.stopPropagation() //
 
-        self.location = "/todo/list";
+        self.location = `/todo/list?${pageRequestDTO.link}`;
     },false);
     const formObj = document.querySelector("form")
     document.querySelector(".btn-danger").addEventListener("click", function (e) {

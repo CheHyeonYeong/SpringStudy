@@ -57,7 +57,7 @@ public class TodoController {
     }
     //한개의 투두 조회하기
     @GetMapping({"/read", "/modify"}) //경로 두 개를 묶음
-    public void read(Long tno, Model model) { //파라미터 값으로 tno를 받음, list에서 title에 작업을 해서 넣어줘야한다!
+    public void read(Long tno,PageRequestDTO pageRequestDTO, Model model) { //파라미터 값으로 tno를 받음, list에서 title에 작업을 해서 넣어줘야한다!
         TodoDTO todoDTO = todoService.getOne(tno);
         log.info(todoDTO);
         model.addAttribute("dto", todoDTO);
